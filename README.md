@@ -56,3 +56,20 @@ client.getAccount(address: accountAddress) { account, error in
     print("Account with address \(accountAddress) has balance \(account.balance).")
 }
 ```
+
+### Scripts
+
+```swift
+// Execute sample script
+let script = "pub fun main(): Int { return 1 }".data(using: .utf8)!
+client.executeScript(script: script, arguments: []) { jsonData, error in
+    guard let jsonData = jsonData else {
+        print("Error executeScript: \(error!.localizedDescription)")
+        return
+    }
+    
+    print("executeScript - resultType: \(String(describing: jsonData["type"])), resultValue: \(String(describing: jsonData["value"])).")
+}
+```
+
+Note: not all functionality is demonstrated in the above examples. To explore the capabilities of the Flow Swift SDK, feel free to check out the Tests folder. Most functionality will have a corresponding test case. 
