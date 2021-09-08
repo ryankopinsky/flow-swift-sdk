@@ -26,3 +26,18 @@ This is a Swift Package, and can be installed via Xcode with the URL of this rep
 `https://github.com/ryankopinsky/flow-swift-sdk`
 
 [For more information on how to add a Swift Package using Xcode, see Apple's official documentation.](https://developer.apple.com/documentation/xcode/adding_package_dependencies_to_your_app)
+
+
+## Usage
+
+```swift
+// Connect to the Flow blockchain
+let client = FlowClient(host: "access.mainnet.nodes.onflow.org", port: 9000)
+client.ping { error in
+    if let error = error {
+        print("Ping Error: \(error.localizedDescription)")
+    } else {
+        print("Ping Success!")
+    }
+}
+```
