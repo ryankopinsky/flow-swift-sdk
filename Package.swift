@@ -30,6 +30,6 @@ let package = Package(
                 .copy("Resources")]),
         .testTarget(
             name: "FlowSwiftTests",
-            dependencies: ["FlowSwift"]),
+            dependencies: ["FlowSwift", "Flow", "SwiftProtobuf", .product(name: "GRPC", package: "grpc-swift")]),
     ]
 )
