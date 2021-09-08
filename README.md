@@ -73,3 +73,7 @@ client.executeScript(script: script, arguments: []) { jsonData, error in
 ```
 
 Note: not all functionality is demonstrated in the above examples. To explore the capabilities of the Flow Swift SDK, feel free to check out the Tests folder. Most functionality will have a corresponding test case. 
+
+## Contributing
+
+Contributions (such as feature requests, bug reports, pull requests etc) are welcome and encouraged. Make sure to abide by the [Code of Conduct](https://github.com/ryankopinsky/flow-swift-sdk/blob/main/CODE_OF_CONDUCT.md). 
