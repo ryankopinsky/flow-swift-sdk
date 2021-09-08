@@ -41,3 +41,18 @@ client.ping { error in
     }
 }
 ```
+
+### Accounts
+
+```swift
+// Get account balance
+let accountAddress = "0xead892083b3e2c6c" // Random address on mainnet
+client.getAccount(address: accountAddress) { account, error in
+    guard let account = account else {
+        print("Error getAccount: \(error!.localizedDescription)")
+        return
+    }
+    
+    print("Account with address \(accountAddress) has balance \(account.balance).")
+}
+```
