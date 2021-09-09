@@ -14,10 +14,19 @@ Currently the following Flow Access API methods have been implemented:
 - [x] Ping
 
 ### Accounts
-- [x] Get account information
+- [x] GetAccountAtLatestBlock
+- [x] GetAccountAtBlockHeight
+
+### Blocks
+- [x] GetLatestBlock
+- [x] GetBlockByHeight
+
+### Events
+- [x] GetEventsForHeightRange
 
 ### Scripts
-- [x] Execute scripts
+- [x] ExecuteScriptAtLatestBlock
+- [x] ExecuteScriptAtBlockHeight
 
 ## Installation
 
