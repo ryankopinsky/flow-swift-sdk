@@ -60,6 +60,19 @@
             wait(for: [expectation], timeout: 5)
         }
         
+        func testGetBlockByHeight() {
+            let expectation = XCTestExpectation(description: "Test Getting Block at Given Height.")
+
+            let height: UInt64 = 18365076
+            self.client.getBlock(height: height) { block, error in
+                XCTAssertNotNil(block, "Error getting block at height \(height): \(String(describing: error?.localizedDescription))")
+                
+                expectation.fulfill()
+            }
+            
+            wait(for: [expectation], timeout: 5)
+        }
+        
         // MARK: - Scripts
         
         func testExecuteScript() {

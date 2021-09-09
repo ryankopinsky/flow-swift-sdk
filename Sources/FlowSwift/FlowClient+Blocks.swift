@@ -32,4 +32,27 @@ extension FlowClient {
             completion(nil, error)
         }
     }
+    
+    // Flow Access API: https://docs.onflow.org/access-api/#getblockbyheight
+    public func getBlock(height: UInt64, completion: @escaping(_ block: Flow_Entities_Block?, _ error: Error?) -> Void) {
+        do {
+            let requestData = try Flow_Access_GetBlockByHeightRequest.with {
+                $0.height = height
+            }.serializedData()
+            
+            let request = try Flow_Access_GetBlockByHeightRequest(serializedData: requestData)
+            
+            let response = client.getBlockByHeight(request).response
+            
+            response.whenSuccess { blockResponse in
+                completion(blockResponse.block, nil)
+            }
+            
+            response.whenFailure { error in
+                completion(nil, error)
+            }
+        } catch {
+            completion(nil, error)
+        }
+    }
 }
