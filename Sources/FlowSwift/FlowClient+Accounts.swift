@@ -39,4 +39,32 @@ extension FlowClient {
             completion(nil, error)
         }
     }
+    
+    // Flow Access API: https://docs.onflow.org/access-api/#getaccountatblockheight
+    public func getAccount(address: String, blockHeight: UInt64, completion: @escaping(_ account: Flow_Entities_Account?, _ error: Error?) -> Void) {
+        guard let addressData = address.data(using: .hexadecimal) else {
+            print("Unable to encode \(address). Verify that address is a hexadecimal string.")
+            completion(nil, FlowAccountError.unableToDecodeAddress)
+            return
+        }
+        
+        do {
+            let requestData = try Flow_Access_GetAccountAtBlockHeightRequest.with {
+                $0.address = addressData
+                $0.blockHeight = blockHeight
+            }.serializedData()
+            let request = try Flow_Access_GetAccountAtBlockHeightRequest(serializedData: requestData)
+            let response = client.getAccountAtBlockHeight(request).response
+            
+            response.whenSuccess { accountResponse in
+                completion(accountResponse.account, nil)
+            }
+            
+            response.whenFailure { error in
+                completion(nil, error)
+            }
+        } catch {
+            completion(nil, error)
+        }
+    }
 }

@@ -16,12 +16,13 @@
             wait(for: [expectation], timeout: 5)
         }
         
+        // MARK: - Accounts
+        
         func testGetFlowAccountBalance() {
             let expectation = XCTestExpectation(description: "Test Getting Flow Account Balance.")
 
             let randomMainnetAddress = "0xead892083b3e2c6c"
             self.client.getAccount(address: randomMainnetAddress) { account, error in
-                print("DEBUG")
                 XCTAssertNotNil(account, "Error getting account: \(String(describing: error?.localizedDescription))")
                 
                 XCTAssertGreaterThanOrEqual(account!.balance, 0, "Negative account balance.")
@@ -30,6 +31,23 @@
             
             wait(for: [expectation], timeout: 5)
         }
+        
+        func testGetAccountAtBlockHeight() {
+            let expectation = XCTestExpectation(description: "Test Getting Flow Account at Given Block Height.")
+
+            let randomMainnetAddress = "0xead892083b3e2c6c"
+            let blockHeight: UInt64 = 18364375
+            self.client.getAccount(address: randomMainnetAddress, blockHeight: blockHeight) { account, error in
+                XCTAssertNotNil(account, "Error getting account: \(String(describing: error?.localizedDescription))")
+                                
+                XCTAssertGreaterThanOrEqual(account!.balance, 0, "Negative account balance.")
+                expectation.fulfill()
+            }
+            
+            wait(for: [expectation], timeout: 5)
+        }
+        
+        // MARK: - Scripts
         
         func testExecuteScript() {
             let expectation = XCTestExpectation(description: "Test Execute Flow Script.")
