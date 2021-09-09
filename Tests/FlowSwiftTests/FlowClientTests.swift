@@ -74,4 +74,31 @@
             
             wait(for: [expectation], timeout: 5)
         }
+        
+        func testExecuteScriptAtBlockHeight() {
+            let expectation = XCTestExpectation(description: "Test Execute Flow Script at Given Block Height.")
+            
+            let script = "pub fun main(): Int { return 1 }".data(using: .utf8)!
+            
+            let blockHeight: UInt64 = 18364375
+            self.client.executeScript(script: script, arguments: [], blockHeight: blockHeight) { jsonData, error in
+                guard let jsonData = jsonData else {
+                    XCTFail("No jsonData from execute script response.")
+                    return
+                }
+                
+                guard jsonData["type"] != nil else {
+                    XCTFail("No value for 'type' key.")
+                    return
+                }
+                
+                guard jsonData["value"] != nil else {
+                    XCTFail("No value for 'type' key.")
+                    return
+                }
+                expectation.fulfill()
+            }
+            
+            wait(for: [expectation], timeout: 5)
+        }
     }
