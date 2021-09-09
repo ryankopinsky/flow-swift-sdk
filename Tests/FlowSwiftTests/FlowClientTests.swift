@@ -73,6 +73,24 @@
             wait(for: [expectation], timeout: 5)
         }
         
+        // MARK: - Events
+        
+        func testGetEventsForHeightRange() {
+            let expectation = XCTestExpectation(description: "Test Getting Events for Height Range.")
+
+            let type: String = FlowEventTypes.TokensWithdrawn.rawValue
+            let startHeight: UInt64 = 18365061
+            let endHeight: UInt64 = 18365076
+            
+            self.client.getEventsForHeightRange(type: type, startHeight: startHeight, endHeight: endHeight) { eventsResponse, error in
+                XCTAssertNotNil(eventsResponse, "Error getting events for \(startHeight) - \(endHeight): \(String(describing: error?.localizedDescription))")
+
+                expectation.fulfill()
+            }
+            
+            wait(for: [expectation], timeout: 5)
+        }
+        
         // MARK: - Scripts
         
         func testExecuteScript() {
