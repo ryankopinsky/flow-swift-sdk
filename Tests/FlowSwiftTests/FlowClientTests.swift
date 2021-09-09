@@ -36,11 +36,24 @@
             let expectation = XCTestExpectation(description: "Test Getting Flow Account at Given Block Height.")
 
             let randomMainnetAddress = "0xead892083b3e2c6c"
-            let blockHeight: UInt64 = 18364375
+            let blockHeight: UInt64 = 18365076
             self.client.getAccount(address: randomMainnetAddress, blockHeight: blockHeight) { account, error in
                 XCTAssertNotNil(account, "Error getting account: \(String(describing: error?.localizedDescription))")
                                 
-                XCTAssertGreaterThanOrEqual(account!.balance, 0, "Negative account balance.")
+                expectation.fulfill()
+            }
+            
+            wait(for: [expectation], timeout: 5)
+        }
+        
+        // MARK: - Blocks
+        
+        func testGetLatestBlock() {
+            let expectation = XCTestExpectation(description: "Test Getting Latest Block.")
+
+            self.client.getLatestBlock(isSealed: true) { block, error in
+                XCTAssertNotNil(block, "Error getting latest block: \(String(describing: error?.localizedDescription))")
+                
                 expectation.fulfill()
             }
             
