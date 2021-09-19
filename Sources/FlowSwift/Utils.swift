@@ -1,11 +1,23 @@
-//
-//  Utils.swift
-//  
-//
-//  Created by Ryan Kopinsky on 9/8/21.
-//
-
 import Foundation
+
+extension String {
+    func trimLeft(_ prefix: String) -> String {
+        guard self.hasPrefix(prefix) else { return self }
+        return String(self.dropFirst(prefix.count)).trimLeft(prefix)
+    }
+}
+
+extension Array{
+    mutating func padToSize(_ size: Int, withValue value: Element) {
+        while (self.count<size){
+            self.insert(value, at: 0)
+        }
+        if (self.count>size){
+            self.removeLast(self.count-size)
+        }
+    }
+}
+
 
 // MARK: - HexString <> Data
 // Reference: https://stackoverflow.com/a/56870030
@@ -39,8 +51,24 @@ extension Data {
         return [UInt8](self)
     }
 
-    func hexString(prefixed isPrefixed: Bool = true) -> String {
+    func hexString(prefixed isPrefixed: Bool = false) -> String {
         return self.bytes.reduce(isPrefixed ? "0x" : "") { $0 + String(format: "%02X", $1).lowercased() }
     }
+    
+    public mutating func padLeftZero(_ count:Int) -> Data{
+        while self.count<count{
+            self.insert(0, at: 0)
+        }
+        return self
+
+    }
+    public mutating func padRightZero(_ count:Int) -> Data{
+        while self.count<count{
+            self.append(0)
+        }
+        return self
+    }
+
 }
+
 
